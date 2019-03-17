@@ -18,7 +18,13 @@ class List extends Component {
     }
 
     static navigationOptions = {
-        title:"News",
+        headerTitleStyle:{
+        flex:1,
+        alignSelf:'center',
+        justifyContent:'center',
+        textAlign:'center',
+        },
+        title:"f",
         headerTintColor:'white'
     }
 
@@ -45,12 +51,10 @@ class List extends Component {
  }
 
  refreshData() {
-    const API_URL = "https://newsapi.org/v2/top-headlines?sources=bbc-news&apiKey=10e85943fabf4ebc903bb199fc5e7399";
-
+    const API_URL = "https://newsapi.org/v2/top-headlines?sources=new-scientist&apiKey=10e85943fabf4ebc903bb199fc5e7399";
     this.setState({refreshing: true})
     axios.get(API_URL).then(({data}) =>{
         this.setState({news: data.articles, refreshing: false});
-    console.log(this.state.news);
   });
 }
 
@@ -98,7 +102,7 @@ const styles = {
     },
     storyies:{
         padding: 10,
-        height:50,
+        height:100,
         justifyContent:'center',
     },
     separator: {
@@ -110,7 +114,9 @@ const styles = {
     },
       touch: {
         backgroundColor:"#fff",
-        height:50,
+        height:70,
+        marginLeft:5,
+        marginRight:5,
     },
     story: {
         flex:1,

@@ -1,25 +1,45 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity, Button, Linking } from 'react-native';
 import Image from 'react-native-image-progress';
-// import ProgressBar from 'react-native-progress/Bar';
+import {FontAwesome} from '@expo/vector-icons';
+import {WebBrowser} from 'expo';
 
 class Detail extends Component {
     constructor(props){
         super(props);
         this.state = {
             story: null,
+            result: null,
         }
     }
     static navigationOptions = ({navigation}) => ({
-        title: navigation.getParam('news').title
+        title: navigation.getParam('news').item.source.name
     })
 
+    handlePressButtonAsync = async () => {
+    let result = await WebBrowser.openBrowserAsync('');
+    this.setState({ result });
+    };
 
 render() {
-        const contact = this.props.navigation.getParam('Contact');
+        const story = this.props.navigation.getParam('news');
+        const {title, urlToImage, url, description, content } = story.item;
+        console.log(urlToImage);
     return(
         <View style={styles.container} >
-
+        <Image source={{uri: `${urlToImage}`}} style={{width:'100%', height:'45%', marginBottom:10}} />
+        <Text style={styles.headline}>
+            {title} {"\n"}
+        </Text>
+        <ScrollView style={styles.story} ><Text style={styles.text}>{description} {"\n"} {content}</Text></ScrollView>
+        <TouchableOpacity
+          style={styles.ieIcon}
+          onPress={ () => WebBrowser.openBrowserAsync(`${url}`)}
+        >
+            <FontAwesome name="internet-explorer" size={32} style={styles.ieIcon}/>
+            <Text style={{fontSize:22, fontWeight:'bold', color:'blue'}} >
+            Click here for Article</Text>
+        </TouchableOpacity>
         </View>
         )
 }
@@ -28,22 +48,27 @@ render() {
 
 const styles = {
     image:{
-        flex:1,
         justifyContent:'center',
     },
-    profile: {
+    story: {
         flex:2,
     },
     container: {
         flex: 1,
         justifyContent:'center',
         alignItems:'center',
-        paddingTop:20,
     },
     text: {
         fontSize:18,
         margin:5,
-
+    },
+    ieIcon: {
+        textAlign:'center',
+        marginBottom:5,
+    },
+    headline: {
+        fontSize:22,
+        margin:5,
     }
 };
 

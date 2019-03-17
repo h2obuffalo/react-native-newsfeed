@@ -22,9 +22,13 @@ const RootNavigator = createStackNavigator({
   Detail: Detail,
 }, {
   defaultNavigationOptions: {
-    title:'News',
+    headerTitleStyle:{
+      flex:1,
+      alignSelf:'center',
+    },
+    title:'Al Jazeera News',
     headerStyle: {
-      backgroundColor: '#2a3daa',
+      backgroundColor: '#d35400',
       textAlign:'center',
       justifyText:'center',
       alignContent:'center',
